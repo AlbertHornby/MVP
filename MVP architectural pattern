@@ -1,0 +1,48 @@
+class Model:
+    def __init__(self):
+        self.tasks = []
+
+    def add_task(self, task):
+        self.tasks.append(task)
+
+    def get_tasks(self):
+        return self.tasks
+
+
+class View:
+    def display_tasks(self, tasks):
+        print("Tasks:")
+        for index, task in enumerate(tasks, start=1):
+            print(f"{index}. {task}")
+
+    def get_input(self, prompt):
+        return input(prompt)
+
+    def show_add_task_screen(self):
+        print("Add a new task:")
+        task = self.get_input("Enter task: ")
+        return task
+
+
+class Presenter:
+    def __init__(self, model, view):
+        self.model = model
+        self.view = view
+
+    def show_tasks(self):
+        tasks = self.model.get_tasks()
+        self.view.display_tasks(tasks)
+
+    def add_task(self):
+        task = self.view.show_add_task_screen()
+        self.model.add_task(task)
+        self.show_tasks()
+
+
+# 示例用法
+model = Model()
+view = View()
+presenter = Presenter(model, view)
+presenter.add_task()
+presenter.add_task()
+presenter.show_tasks()

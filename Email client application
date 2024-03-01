@@ -1,0 +1,51 @@
+class Model:
+    def __init__(self):
+        self.emails = []
+
+    def add_email(self, email):
+        self.emails.append(email)
+
+    def get_emails(self):
+        return self.emails
+
+
+class View:
+    def display_emails(self, emails):
+        print("Emails:")
+        for index, email in enumerate(emails, start=1):
+            print(f"{index}. {email}")
+
+    def get_input(self, prompt):
+        return input(prompt)
+
+    def show_compose_email_screen(self):
+        print("Compose a new email:")
+        recipient = self.get_input("Recipient: ")
+        subject = self.get_input("Subject: ")
+        body = self.get_input("Body: ")
+        return recipient, subject, body
+
+
+class Presenter:
+    def __init__(self, model, view):
+        self.model = model
+        self.view = view
+
+    def show_emails(self):
+        emails = self.model.get_emails()
+        self.view.display_emails(emails)
+
+    def compose_email(self):
+        recipient, subject, body = self.view.show_compose_email_screen()
+        email = f"To: {recipient}\nSubject: {subject}\n\n{body}"
+        self.model.add_email(email)
+        self.show_emails()
+
+
+# 示例用法
+model = Model()
+view = View()
+presenter = Presenter(model, view)
+presenter.compose_email()
+presenter.compose_email()
+presenter.show_emails()
